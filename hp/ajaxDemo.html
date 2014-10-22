@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=320, initial-scale=1.0,maximum-scale=1.0, user-scalable=0"/>	
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<META content="no-cache" http-equiv="pragma">
+<META content="no-cache" http-equiv="cache-control">
+<META content="0" http-equiv="expires">
+<meta content="telephone=no" name="format-detection"/>
+<title>ajax请求测试</title>
+</head>
+<body>
+<!--
+    引入sea.js 放置于此
+-->
+<header>
+	<h1>ajax请求测试</h1>
+</header>
+<section id="city_list">
+
+
+</div>
+<footer>
+	<h1>copyright</h1>
+</footer>
+
+<script src="ajax.js"></script>
+<script>
+	function loadData(){		
+		var cityList=document.getElementById("city_list");
+		cityList.innerHTML="loading...";
+		handpay.ajax.get("city.json",{},{"success": function(msg,obj){
+			console.log(msg+"--"+obj);
+			cityList.innerHTML="loading...";
+		
+		}});
+	
+	}
+	
+	(function(){loadData()})();
+</script>
+</body>
+</html>
