@@ -31,11 +31,11 @@
 	function loadData(){		
 		var cityList=document.getElementById("city_list");
 		cityList.innerHTML="loading...";
-		handpay.ajax.get("city.json",{},{"success": function(msg,obj){
+		handpay.ajax.get("city.json",{},function(msg,obj){
 			console.log(msg+"--"+obj);
-			cityList.innerHTML="loading...";
+			cityList.innerHTML="loading success...";
 		
-		}});
+		});
 	
 	}
 	

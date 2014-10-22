@@ -8,6 +8,14 @@
  */
 
 define(function(require,exports,module){
+/*
+ * 
+ * Copyright 2005-2015 All Rights Reserved 上海瀚银信息技术有限公司.
+ * 
+ * path: ajax.js
+ * author: eric_wang
+ * date: 2014/10/22
+ */
 
 var handpay=handpay||{"version":"v.1.0.0"};
 
@@ -18,6 +26,7 @@ var handpay=handpay||{"version":"v.1.0.0"};
  * @property before 请求发送前触发的全局事件，function(XMLHttpRequest xhr) 
  */
 handpay.ajax = handpay.ajax || {};
+
 /**
  * 发送一个ajax请求
  * @name handpay.ajax.request
@@ -49,18 +58,18 @@ handpay.ajax.request=function(url,options){
     var password = options.password || "";
     var method = (options.method || "GET").toUpperCase();
     var headers = options.headers || {};
-    var success = options.success || {};
-    var error = options.error || {};
-    var before = options.before || {};
+    var success = options.success || "";
+    var error = options.error || "";
+    var before = options.before || "";
     var xhr;
 	
 	//状态报告
 	function reportStatus(){
         if (xhr.readyState == 4) {
-			var stat = req.status;
-            if (req.status == 200) {
+			var stat = xhr.status;
+            if (stat == 200) {
              	 if(success){
-					success(xhr.responseText,xhr);
+					success.call(this,xhr.responseText,xhr);
 				}
             } else {
              	// http://www.never-online.net/blog/article.asp?id=261
@@ -77,11 +86,11 @@ handpay.ajax.request=function(url,options){
                 || stat == 304
                 || stat == 1223) {
                 if(success){
-					success(xhr.responseText,xhr);
+					success.call(this,xhr.responseText,xhr);
 				}
             } else {
                 if(error){
-					error(xhr);
+					error.call(this,xhr);
 				}
             }
             
@@ -166,7 +175,7 @@ handpay.ajax.request=function(url,options){
         }
 		
         if(before){
-			before(xhr);
+			before.call(this,xhr);
 		}
         		
         if(method == "POST") {                        
@@ -178,22 +187,22 @@ handpay.ajax.request=function(url,options){
 		
         if (!async) {
 			if(callback){
-				callback();
+				callback.call(this);
 			}
         }		
      };
 	
 	(function(){
 		var callback = reportStatus;//default alert        
-        if(params){
+        if(data){
         	try{
         		if(url.indexOf("?")==-1){
         			 url=url+"?";
         		}else{
         			 url+="&";
         		}
-	        	for(var i in params){
-	        		url+=i+"="+params[i]+"&";
+	        	for(var i in data){
+	        		url+=i+"="+data[i]+"&";
 	        	}
 				if(!cacheable){
 					url+="t"+(new Date().getTime())+"=v1&";
@@ -210,6 +219,7 @@ handpay.ajax.request=function(url,options){
         executeXhr(callback);
 	})();
 };
+
 
 /**
  * 发送一个post请求

@@ -48,18 +48,18 @@ handpay.ajax.request=function(url,options){
     var password = options.password || "";
     var method = (options.method || "GET").toUpperCase();
     var headers = options.headers || {};
-    var success = options.success || {};
-    var error = options.error || {};
-    var before = options.before || {};
+    var success = options.success || "";
+    var error = options.error || "";
+    var before = options.before || "";
     var xhr;
 	
 	//状态报告
 	function reportStatus(){
         if (xhr.readyState == 4) {
-			var stat = req.status;
-            if (req.status == 200) {
+			var stat = xhr.status;
+            if (stat == 200) {
              	 if(success){
-					success(xhr.responseText,xhr);
+					success.call(this,xhr.responseText,xhr);
 				}
             } else {
              	// http://www.never-online.net/blog/article.asp?id=261
@@ -76,11 +76,11 @@ handpay.ajax.request=function(url,options){
                 || stat == 304
                 || stat == 1223) {
                 if(success){
-					success(xhr.responseText,xhr);
+					success.call(this,xhr.responseText,xhr);
 				}
             } else {
                 if(error){
-					error(xhr);
+					error.call(this,xhr);
 				}
             }
             
@@ -148,6 +148,7 @@ handpay.ajax.request=function(url,options){
 		var urlPrefix = urlWithParam[0];//the url
 		var arg = urlWithParam[1];//the arguments
 		
+		
 		if (username) {
             xhr.open(method, url, async, username, password);
         } else {
@@ -165,7 +166,7 @@ handpay.ajax.request=function(url,options){
         }
 		
         if(before){
-			before(xhr);
+			before.call(this,xhr);
 		}
         		
         if(method == "POST") {                        
@@ -177,22 +178,65 @@ handpay.ajax.request=function(url,options){
 		
         if (!async) {
 			if(callback){
-				callback();
+				callback.call(this);
 			}
         }		
-     };
+     }
+	 
+	function loadScript(callback){
+		var head = document.head ||document.getElementsByTagName("head")[0]|| document.documentElement;
+		var script = document.createElement("script");
+			script.async = true;
+			//if ( s.scriptCharset ) {
+				script.charset = "UTF-8";
+			//}
+
+				script.src =url;
+
+				// Attach handlers for all browsers
+				script.onload = script.onreadystatechange = function( _, isAbort) {
+
+					if ( isAbort || !script.readyState || /loaded|complete/.test( script.readyState ) ) {
+
+						// Handle memory leak in IE
+						script.onload = script.onreadystatechange = null;
+
+						// Remove the script
+						if ( script.parentNode ) {
+							script.parentNode.removeChild( script );
+						}
+
+						// Dereference the script
+						script = null;
+
+						// Callback if not abort
+						if ( !isAbort ) {
+							if(success){
+								success.call(this,xhr.responseText,xhr);
+							}
+						}
+					}
+				};
+
+				// Circumvent IE6 bugs with base elements (#2709 and #4378) by prepending
+				// Use native DOM manipulation to avoid our domManip AJAX trickery
+				head.insertBefore( script, head.firstChild );
+			}
+	}
+	 
+	 
 	
 	(function(){
 		var callback = reportStatus;//default alert        
-        if(params){
+        if(data){
         	try{
         		if(url.indexOf("?")==-1){
         			 url=url+"?";
         		}else{
         			 url+="&";
         		}
-	        	for(var i in params){
-	        		url+=i+"="+params[i]+"&";
+	        	for(var i in data){
+	        		url+=i+"="+data[i]+"&";
 	        	}
 				if(!cacheable){
 					url+="t"+(new Date().getTime())+"=v1&";
