@@ -25,11 +25,13 @@ handpay.ajax = handpay.ajax || {};
  * @param {string}  url 发送请求的url
  * @param {Object}  [options] 发送请求的选项参数                
  * @config {String}     [method]            请求发送的类型。默认为GET
+ * @config {String}     [dataType]            请求发送的类型。默认为GET
  * @config {Boolean} [async]            是否异步请求。默认为true（异步）
  * @config {Boolean} [cacheable]            是否缓存请求。默认为true（缓存）
  * @config {String}     [data]              需要发送的数据。 
  * @config {Object}  [headers]           要设置的http request header
- * @config {String}     [username]          用户 * @config {String}     [password]          密码
+ * @config {String}     [username]          用户 
+ * @config {String}     [password]          密码
  * @config {Function} [success]       请求成功时触发，function(string responseText，XMLHttpRequest xhr)
  * @config {Function} [error]        请求失败时触发，function(XMLHttpRequest xhr)
  * @config {Function} [before]   发送请求之前触发，function(XMLHttpRequest xhr) 
@@ -47,20 +49,61 @@ handpay.ajax.request=function(url,options){
     var username = options.username || "";
     var password = options.password || "";
     var method = (options.method || "GET").toUpperCase();
+    var dataType = (options.dataType || "HTML").toUpperCase();
     var headers = options.headers || {};
     var success = options.success || "";
     var error = options.error || "";
-    var before = options.before || "";
+    var before = options.before || "";	
+	var jsonp=options.jsonp || "jsonpcallback";  //jsonp的函数名称
+	var jsonpCallback=options.jsonp||"";
     var xhr;
+	
+	/**HTML转义
+	 * @param {string} [str]  需要转义的字符串
+	 */
+	function escape(str){
+      return str
+          .replace(/&/g,'&amp;')
+          .replace(/</g,'&lt;')
+          .replace(/>/g,'&gt;')
+          .replace(/"/g,'&quot;')
+          .replace(/'/g,'&#39;');
+    }
+	
+	function firedEvent(callback){
+		switch(dataType){
+			case "TEXT":
+			if(callback){
+				callback(escape(xhr.responseText),xhr);
+			}
+			break;			
+			case "JSON":
+			if(callback){
+				callback(parseJson(xhr.responseText),xhr);
+			}
+			break;
+			case "HTML":
+			default:
+			if(callback){
+				callback(xhr.responseText,xhr);
+			}			
+		}
+	}
+	
+	function parseJson(str){
+		if(JSON){
+			return JSON.parse(str);
+		}else{
+			return (new Function("return "+str))();
+		}
+	}
 	
 	//状态报告
 	function reportStatus(){
         if (xhr.readyState == 4) {
 			var stat = xhr.status;
             if (stat == 200) {
-             	 if(success){
-					success.call(this,xhr.responseText,xhr);
-				}
+             	firedEvent(success);
             } else {
              	// http://www.never-online.net/blog/article.asp?id=261
             // case 12002: // Server timeout      
@@ -74,10 +117,8 @@ handpay.ajax.request=function(url,options){
             // should be 204, so treat it as success
             if ((stat >= 200 && stat < 300)
                 || stat == 304
-                || stat == 1223) {
-                if(success){
-					success.call(this,xhr.responseText,xhr);
-				}
+                || stat == 1223) {                
+				firedEvent(success);
             } else {
                 if(error){
 					error.call(this,xhr);
@@ -135,7 +176,7 @@ handpay.ajax.request=function(url,options){
     }
     
      //execute ajax request
-    function executeXhr(callback) {     	
+    function executeXhr(callback) {	
         xhr=getXHR();
         if(cacheable){
 	        try{
@@ -193,6 +234,7 @@ handpay.ajax.request=function(url,options){
 
 				script.src =url;
 
+				
 				// Attach handlers for all browsers
 				script.onload = script.onreadystatechange = function( _, isAbort) {
 
@@ -211,46 +253,78 @@ handpay.ajax.request=function(url,options){
 
 						// Callback if not abort
 						if ( !isAbort ) {
-							if(success){
-								success.call(this,xhr.responseText,xhr);
+							
+						}else{
+							if(error){
+								error();
 							}
 						}
 					}
 				};
-
+				
+				if(before){
+					jsonpFired(before);
+				}
+				
+				if(success){
+					jsonpFired(success);
+				}
 				// Circumvent IE6 bugs with base elements (#2709 and #4378) by prepending
 				// Use native DOM manipulation to avoid our domManip AJAX trickery
 				head.insertBefore( script, head.firstChild );
-			}
+			//}
 	}
-	 
+	
+	//jsonp 数据获取
+	function jsonpFired(callback){
+		//console.log(" window."+jsonpCallback+"=function(data){data=(new Function('return data'))();callback(data)}");
+		var fired=new Function("callbackfunction","parseJsonFun"," window."+jsonpCallback+"=function(data){data=parseJsonFun(data);callbackfunction(data);}");
+		fired(callback,parseJson);	
+	}
 	 
 	
 	(function(){
-		var callback = reportStatus;//default alert        
-        if(data){
-        	try{
-        		if(url.indexOf("?")==-1){
-        			 url=url+"?";
-        		}else{
-        			 url+="&";
-        		}
-	        	for(var i in data){
-	        		url+=i+"="+data[i]+"&";
-	        	}
-				if(!cacheable){
-					url+="t"+(new Date().getTime())+"=v1&";
+		var callback = reportStatus;//default alert
+		if(data||dataType==="JSONP"){
+			if(url.indexOf("?")==-1){
+				 url=url+"?";
+			}else{
+				 url+="&";
+			}
+			if(dataType==="JSONP"){
+				if(!jsonpCallback){// jsonpCallback 参数为空或者没传的时候 重新生成函数名称
+					jsonpCallback="handpayAjax"+(new Date().getTime());
+				}				
+				url+=jsonp+"="+jsonpCallback+"&";				
+			}
+			if(data){
+				try{
+					if(typeof(data)==="object"){ //如果data参数是json对象 就转为参数的链式结构						
+						for(var i in data){
+							if(data.hasOwnProperty(i)){
+								url+=i+"="+data[i]+"&";
+							}
+						}
+						if(!cacheable){
+							url+="t"+(new Date().getTime())+"=v1&";
+						}
+						url=url.substring(0,url.length-1);
+					}
+					
+				}catch(e){
+					return null;
 				}
-	        	url=url.substring(0,url.length-1);
-        	}catch(e){
-        		return null;
-        	}
-        }
+			}			
+		}
          /*encode URL with Chinese*/
         url = encodeURI(url);
         //alert(url);
         //execute the remote method
-        executeXhr(callback);
+		if(dataType==="JSONP"){
+			loadScript(callback);
+		}else{
+			executeXhr(callback);
+		}
 	})();
 };
 

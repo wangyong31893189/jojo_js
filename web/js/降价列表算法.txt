@@ -1,0 +1,94 @@
+public SSJActivityMdseRuleBean _parseRuleForPage(String content)
+			throws ActivityMdseRuleException {
+		if(StringUtils.isBlank(content))
+		{
+			logger.debug("没有规则信息！");
+			return null;
+		}
+		// String content =
+		// "{'limitBuy':1,'downTimes':1,'finalPrice':30.0,'everyDownPrice':5,sellStartTime:'20130109111111',sellEndTime:'20130109231111',price:99.00}";
+		try {
+			List<SSJMdseDownRuleBean> ssjDownList = new ArrayList<SSJMdseDownRuleBean>();
+			JsonParser jp = new JsonParser();
+			JsonElement el = jp.parse(content);
+			JsonObject jbs = el.getAsJsonObject();
+			JsonElement limitBuyElement = jbs.get("limitBuy");
+			JsonElement downTimesElement = jbs.get("downTimes");
+			JsonElement finalPriceElement = jbs.get("finalPrice");
+			JsonElement everyDownPriceElement = jbs.get("everyDownPrice");
+			JsonElement sellStartTimeElement = jbs.get("sellStartTime");
+			JsonElement sellEndTimeElement = jbs.get("sellEndTime");
+			JsonElement priceElement = jbs.get("price");
+			Integer limitBuy = limitBuyElement.getAsInt();
+			Integer downTimes = downTimesElement.getAsInt();
+			BigDecimal finalPrice = finalPriceElement.getAsBigDecimal().setScale(2,BigDecimal.ROUND_HALF_UP);
+			BigDecimal everyDownPrice = everyDownPriceElement.getAsBigDecimal().setScale(2,BigDecimal.ROUND_HALF_UP);
+			String sellStartTime = sellStartTimeElement.getAsString();
+			String sellEndTime = sellEndTimeElement.getAsString();
+			BigDecimal price = new BigDecimal(priceElement.getAsDouble());
+
+			
+			BigDecimal downprice = price.subtract(finalPrice).add(everyDownPrice);
+			java.util.Calendar start = Calendar.getInstance();
+			java.util.Calendar end = Calendar.getInstance();
+			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
+					"yyyyMMddHHmmss");
+			//根据折扣价格，降价频率等算出需要降价多少次
+			int times = downprice.remainder(everyDownPrice).compareTo(new BigDecimal(0.00)) == 0 ? downprice.divide(everyDownPrice,BigDecimal.ROUND_HALF_UP).intValue() :downprice.divide(everyDownPrice,BigDecimal.ROUND_HALF_UP).add(new BigDecimal(1)).intValue();
+			start.setTime(sdf.parse(sellStartTime));
+			end.setTime(sdf.parse(sellEndTime));
+			String startDate = sdf.format(start.getTime());
+			BigDecimal lastPrice = price.setScale(2, BigDecimal.ROUND_HALF_UP);
+			//循环构件降价规则对象
+			for (int i = 1; i < times; i++) {
+				SSJMdseDownRuleBean downRule = new SSJMdseDownRuleBean();
+				start.add(java.util.Calendar.SECOND, downTimes);
+				String nextDate = sdf.format(start.getTime());
+				//设置每次降价的起始时间和终止时间
+				if (start.after(end)) {
+					sellStartTime = sellEndTime;
+				}
+				downRule.setStartTime(startDate);
+				downRule.setEndTime(nextDate);
+				//计算出每次降价过程中的售价
+				BigDecimal old = price.subtract(everyDownPrice.multiply(new BigDecimal(i)));
+				//如果每次降价过程中的售价小于该商品规定的最终售价，以最终售价为准
+				if (old.doubleValue() < finalPrice.doubleValue()) {
+					everyDownPrice = everyDownPrice.subtract(finalPrice.subtract(old));
+					//everyDownPrice = new BigDecimal(everyDownPrice.doubleValue() - (finalPrice.doubleValue() -old.doubleValue()));
+					old = finalPrice;
+				}
+				//设置降价频率
+				downRule.setDownTimes(downTimes);
+				//设置销售价格
+				downRule.setPrice(old.setScale(2,BigDecimal.ROUND_HALF_UP));
+				//设置折扣价格
+				downRule.setDisCountPrice(everyDownPrice.setScale(2,BigDecimal.ROUND_HALF_UP));
+				//设置降价过程中上一次的售价
+				if(i==0)
+				{
+					lastPrice = downRule.getPrice();
+				}
+				downRule.setPrevPrice(lastPrice);
+				ssjDownList.add(downRule);
+				logger.debug("当前价格："+old.setScale(2,BigDecimal.ROUND_HALF_UP)+"，商品降价开售时间："+startDate+"，商品结束时间"+nextDate+"，优惠价格："+everyDownPrice.setScale(2,BigDecimal.ROUND_HALF_UP)+"，上一次的售价"+lastPrice);
+				startDate = nextDate;
+				lastPrice =  downRule.getPrice();
+			}
+			SSJActivityMdseRuleBean ssj = new SSJActivityMdseRuleBean();
+			ssj.setLimitBuy(limitBuy);
+			ssj.setDownTimes(downTimes);
+			ssj.setFinalPrice(finalPrice.setScale(2,BigDecimal.ROUND_HALF_UP));
+			ssj.setEveryDownPrice(everyDownPrice.setScale(2,BigDecimal.ROUND_HALF_UP));		
+			ssj.setDownRuleList(ssjDownList);
+			return ssj;
+		} catch (ParseException e) {
+			logger.error("活动规则解析失败:" + e.getMessage());
+			throw new ActivityMdseRuleException(ActivityMdseRuleErrorCodes.PARSE_ERROR, "活动商品规则解析失败",e);
+		}
+		catch(Exception e)
+		{
+			logger.error("解析活动规则失败:"+e.getMessage());
+			throw new ActivityMdseRuleException(ActivityMdseRuleErrorCodes.PARSE_ERROR, "活动商品规则解析失败",e);
+		}
+	}

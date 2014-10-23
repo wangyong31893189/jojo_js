@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name=viewport content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta content=no-cache http-equiv=pragma>
+<meta content=no-cache http-equiv=cache-control>
+<meta content=0 http-equiv=expires>
+<title>时时降-首页</title>
+<link rel="stylesheet" type="text/css" href="css/ssj_all.css">
+</head>
+
+<body class="bg01">
+<!--内容导航 start-->
+<div class="nav_con pos"> <font class="dq_name">时时降</font> <a href="index.html" class="ret_next pos01">活动首页</a> <a href="ssj_gze.html" class="ret_next pos02">活动规则</a> </div>
+<!--内容导航 end-->
+
+<div class="pic"><a href="#"><img src="images/ssj01.jpg" width="320" height="128"></a></div>
+<div class="title mar_b10">入门组</div>
+<div class="box mar_b10">
+  <div class="tit mar_b15" id="countDownBack1"> <em class="fl" id="countDownText1">距离结束 00小时46分46秒</em> <a class="shua fr" href="#"><img id="imgShow1"  src="images/ssj08.jpg" width="63" height="33"></a> </div>
+  <div class="b_cont"> <a class="name mar_b10" href="#">苹果iphone5手机/WCDMA版/16G/黑色</a> <a class="tpian mar_b10" href="#"><img src="images/ssj03.jpg" width="150" height="150"></a>
+    <div class="other mar_b10">
+      <div class="time fl" id="dutchAuctionTime1"><em>25</em><font>秒后</font><i><img src="images/ssj05.jpg" width="15" height="16"></i><em>22</em><font>元</font></div>
+      <div class="aprice fr"><em class="fr cor04 yuan">原价￥6500.00元</em><br>
+        <em class="size16 fr cor03" id="nowTotalPrice1">现价￥6500.00元</em></div>
+    </div>
+    <div class="gzhu mar_b10">已售出<strong class="cor03 size16">2306</strong>件 <br>(如商品售完，活动即提前结束!)</div>
+    <div class="bnt mar_b10" id="buttonDetail1"><a class="bnt01" href="ssj_detail01.html">立即抢购</a></div>
+  </div>
+</div>
+
+<div class="box mar_b10">
+  <div class="tit mar_b15" id="countDownBack2"> <em class="fl" id="countDownText2">距离结束 00小时46分46秒</em> <a class="shua fr" href="#"><img id="imgShow2"  src="images/ssj08.jpg" width="63" height="33"></a> </div>
+  <div class="b_cont"> <a class="name mar_b10" href="#">苹果iphone5手机/WCDMA版/16G/黑色</a> <a class="tpian mar_b10" href="#"><img src="images/ssj03.jpg" width="150" height="150"></a>
+    <div class="other mar_b10">
+      <div class="time fl" id="dutchAuctionTime2"><em>25</em><font>秒后</font><i><img src="images/ssj05.jpg" width="15" height="16"></i><em>22</em><font>元</font></div>
+      <div class="aprice fr"><em class="fr cor04 yuan">原价￥6500.00元</em><br>
+        <em class="size16 fr cor03" id="nowTotalPrice2">现价￥6500.00元</em></div>
+    </div>
+    <div class="gzhu mar_b10">已售出<strong class="cor03 size16">2306</strong>件 <br>(如商品售完，活动即提前结束!)</div>
+    <div class="bnt mar_b10" id="buttonDetail2"><a class="bnt01" href="ssj_detail01.html">立即抢购</a></div>
+  </div>
+</div>
+
+<div class="box mar_b10">
+  <div class="tit mar_b15"> <em class="fl">距离结束 00小时46分46秒</em> <a class="shua fr" href="#"><img src="images/ssj08.jpg" width="63" height="33"></a> </div>
+  <div class="b_cont"> <a class="name mar_b10" href="#">苹果iphone5手机/WCDMA版/16G/黑色</a> <a class="tpian mar_b10" href="#"><img src="images/ssj03.jpg" width="150" height="150"></a>
+    <div class="other mar_b10">
+      <div class="time fl"><font class="size18 cor03">最低价啦</font></div>
+      <div class="aprice fr"><em class="fr cor04 yuan">原价￥6500.00元</em><br>
+        <em class="size16 fr cor03">现价￥6500.00元</em></div>
+    </div>
+    <div class="gzhu mar_b10">已售出<strong class="cor03 size16">2306</strong>件  <br>(如商品售完，活动即提前结束!)</div>
+    <div class="bnt mar_b10"><a class="bnt01" href="ssj_detail02.html">立即抢购</a></div>
+  </div>
+</div>
+<div class="title mar_b10">提升组</div>
+<div class="box mar_b10">
+  <div class="tit2 mar_b15"> <em class="fl">即将开始 00小时46分46秒</em> <a class="shua fr" href="#"><img src="images/ssj07.jpg" width="63" height="33"></a> </div>
+  <div class="b_cont"> <a class="name mar_b10" href="#">苹果iphone5手机/WCDMA版/16G/黑色</a> <a class="tpian mar_b10" href="#"><img src="images/ssj03.jpg" width="150" height="150"></a>
+    <div class="other mar_b10">
+      <div class="time fl"><font class="size18">即将开始</font></div>
+      <div class="aprice fr"><em class="fr cor04 yuan">原价￥6500.00元</em><br>
+        <em class="size16 fr cor03">现价￥6500.00元</em></div>
+    </div>
+    <div class="gzhu mar_b10">已售出<strong class="cor03 size16">2306</strong>件 <br>(如商品售完，活动即提前结束!)</div>
+    <div class="bnt mar_b10"><a class="bnt02" href="ssj_detail03.html">查看详情</a></div>
+  </div>
+</div>
+<div class="title mar_b10">高手组</div>
+<div class="box mar_b10">
+  <div class="tit mar_b15"> <em class="fl">距离结束 00小时46分46秒</em> <a class="shua fr" href="#"><img src="images/ssj08.jpg" width="63" height="33"></a> </div>
+  <div class="b_cont"> <a class="name mar_b10" href="#">苹果iphone5手机/WCDMA版/16G/黑色</a> <a class="tpian mar_b10" href="#"><img src="images/ssj03.jpg" width="150" height="150"></a>
+    <div class="other mar_b10">
+      <div class="time fl"><em>25</em><font>秒后</font><i><img src="images/ssj05.jpg" width="15" height="16"></i><em>22</em><font>元</font></div>
+      <div class="aprice fr"><em class="fr cor04 yuan">原价￥6500.00元</em><br>
+        <em class="size16 fr cor03">现价￥6500.00元</em></div>
+    </div>
+    <div class="gzhu mar_b10">已售出<strong class="cor03 size16">2306</strong>件 <br>(如商品售完，活动即提前结束!)</div>
+    <div class="bnt mar_b10"><a class="bnt03" href="ssj_detail04.html">还有机会</a></div>
+  </div>
+</div>
+<div class="title mar_b10">达人组</div>
+<div class="box mar_b10">
+  <div class="tit3 mar_b15"> <em class="fl">已结束</em> <a class="shua fr" href="#"><img src="images/ssj06.jpg" width="63" height="33"></a> </div>
+  <div class="b_cont"> <a class="name mar_b10" href="#">苹果iphone5手机/WCDMA版/16G/黑色</a> <a class="tpian mar_b10" href="#"><img src="images/ssj03.jpg" width="150" height="150"></a>
+    <div class="other mar_b10">
+      <div class="time fl"><font class="size18">已经结束</font></div>
+      <div class="aprice fr"><em class="fr cor04 yuan">原价￥6500.00元</em><br>
+        <em class="size16 fr cor03">现价￥6500.00元</em></div>
+    </div>
+    <div class="gzhu mar_b10">已售出<strong class="cor03 size16">2306</strong>件 <br>(如商品售完，活动即提前结束!)</div>
+    <div class="bnt mar_b10"><a class="bnt03" href="ssj_detail05.html">已结束</a></div>
+  </div>
+</div>
+<div class="box mar_b10">
+  <div class="tit3 mar_b15"> <em class="fl">抢光啦</em> <a class="shua fr" href="#"><img src="images/ssj06.jpg" width="63" height="33"></a> </div>
+  <div class="b_cont"> <a class="name mar_b10" href="#">苹果iphone5手机/WCDMA版/16G/黑色</a> <a class="tpian mar_b10" href="#"><img src="images/ssj03.jpg" width="150" height="150"></a>
+    <div class="other mar_b10">
+      <div class="time fl"><font class="size18">出手晚啦</font></div>
+      <div class="aprice fr"><em class="fr cor04 yuan">原价￥6500.00元</em><br>
+        <em class="size16 fr cor03">现价￥6500.00元</em></div>
+    </div>
+    <div class="gzhu mar_b10">已售出<strong class="cor03 size16">2306</strong>件  <br>(如商品售完，活动即提前结束!)</div>
+    <div class="bnt mar_b10"><a class="bnt03" href="ssj_detail06.html">抢光啦</a></div>
+  </div>
+</div>
+<script src="js/countdown.js"></script>
+<script>
+//调用示例
+(function(){
+    var currStemp = new Date();
+	//alert("success");
+      new CountDown().options.init({
+				         countId : '1',//显示时间的ID序号
+				         endurl : '',//时间结束时要转向的URL
+				         sellBeginTimeStemp :1359714600000, //传入的销售开始时间结束点
+						 sellEndTimeStemp:1359715799000, //传入的销售结束时间结束点
+						 currStemp:1359596442262,   //服务器传入的当前时间
+						 type:4,//倒计时类型
+						 projectImageUrl:"http://test.99wuxian.com/mall/wap/sftwap/image/iphone/app/dutchAuction/",  //图片路径目录地址
+						 goodsDetailUrl:"dutchAuctionDetail.do?ac=ssj_000001&cc=2&gc=1&mc=E999900014625", //商品详情地址
+						 dataOptions:{lowestPrice:2.00,//当前商品最低价
+							dutchActions:[{"index":1,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183000","end":"20130201183030","cutPrice":"0.60","endPrice":"19.40","prevPrice":"20.00"},{"index":2,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183030","end":"20130201183100","cutPrice":"0.60","endPrice":"18.80","prevPrice":"19.40"},{"index":3,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183100","end":"20130201183130","cutPrice":"0.60","endPrice":"18.20","prevPrice":"18.80"},{"index":4,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183130","end":"20130201183200","cutPrice":"0.60","endPrice":"17.60","prevPrice":"18.20"},{"index":5,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183200","end":"20130201183230","cutPrice":"0.60","endPrice":"17.00","prevPrice":"17.60"},{"index":6,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183230","end":"20130201183300","cutPrice":"0.60","endPrice":"16.40","prevPrice":"17.00"},{"index":7,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183300","end":"20130201183330","cutPrice":"0.60","endPrice":"15.80","prevPrice":"16.40"},{"index":8,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183330","end":"20130201183400","cutPrice":"0.60","endPrice":"15.20","prevPrice":"15.80"},{"index":9,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183400","end":"20130201183430","cutPrice":"0.60","endPrice":"14.60","prevPrice":"15.20"},{"index":10,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183430","end":"20130201183500","cutPrice":"0.60","endPrice":"14.00","prevPrice":"14.60"},{"index":11,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183500","end":"20130201183530","cutPrice":"0.60","endPrice":"13.40","prevPrice":"14.00"},{"index":12,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183530","end":"20130201183600","cutPrice":"0.60","endPrice":"12.80","prevPrice":"13.40"},{"index":13,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183600","end":"20130201183630","cutPrice":"0.60","endPrice":"12.20","prevPrice":"12.80"},{"index":14,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183630","end":"20130201183700","cutPrice":"0.60","endPrice":"11.60","prevPrice":"12.20"},{"index":15,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183700","end":"20130201183730","cutPrice":"0.60","endPrice":"11.00","prevPrice":"11.60"},{"index":16,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183730","end":"20130201183800","cutPrice":"0.60","endPrice":"10.40","prevPrice":"11.00"},{"index":17,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183800","end":"20130201183830","cutPrice":"0.60","endPrice":"9.80","prevPrice":"10.40"},{"index":18,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183830","end":"20130201183900","cutPrice":"0.60","endPrice":"9.20","prevPrice":"9.80"},{"index":19,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183900","end":"20130201183930","cutPrice":"0.60","endPrice":"8.60","prevPrice":"9.20"},{"index":20,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201183930","end":"20130201184000","cutPrice":"0.60","endPrice":"8.00","prevPrice":"8.60"},{"index":21,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201184000","end":"20130201184030","cutPrice":"0.60","endPrice":"7.40","prevPrice":"8.00"},{"index":22,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201184030","end":"20130201184100","cutPrice":"0.60","endPrice":"6.80","prevPrice":"7.40"},{"index":23,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201184100","end":"20130201184130","cutPrice":"0.60","endPrice":"6.20","prevPrice":"6.80"},{"index":24,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201184130","end":"20130201184200","cutPrice":"0.60","endPrice":"5.60","prevPrice":"6.20"},{"index":25,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201184200","end":"20130201184230","cutPrice":"0.60","endPrice":"5.00","prevPrice":"5.60"},{"index":26,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201184230","end":"20130201184300","cutPrice":"0.60","endPrice":"4.40","prevPrice":"5.00"},{"index":27,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201184300","end":"20130201184330","cutPrice":"0.60","endPrice":"3.80","prevPrice":"4.40"},{"index":28,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201184330","end":"20130201184400","cutPrice":"0.60","endPrice":"3.20","prevPrice":"3.80"},{"index":29,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201184400","end":"20130201184430","cutPrice":"0.60","endPrice":"2.60","prevPrice":"3.20"},{"index":30,"endTimeStemp":30000,"currenTime":"20130130165855","start":"20130201184430","end":"20130201184500","cutPrice":"0.60","endPrice":"2.00","prevPrice":"2.60"}]},
+						 goodsBuyingUrl:"dutchAuctionDetail.do?ac=ssj_000001&cc=2&gc=1&mc=E999900014625"   //商品抢购地址
+						 }
+				     );
+	 
+	 new CountDown().options.init({
+         countId : '2',//显示时间的ID序号
+         endurl : '',//时间结束时要转向的URL        
+         sellBeginTimeStemp :currStemp.getTime()-10000, //传入的销售开始时间结束点
+		 sellEndTimeStemp :currStemp.getTime()+40000, //传入的销售结束时间结束点
+		 currStemp:currStemp.getTime()+5000,   //服务器传入的当前时间
+		 type:1,//倒计时类型
+		 projectImageUrl:"images/",  //图片路径目录地址
+		 goodsDetailUrl:"sj_detail01.html", //商品详情地址
+		 goodsBuyingUrl:"sj_detail01.html"   //商品抢购地址
+		 }
+     );
+ })();
+</script>
+</body>
+</html>
