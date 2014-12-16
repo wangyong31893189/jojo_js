@@ -57,7 +57,8 @@ handpay.ajax.request=function(url,options){
     var error = options.error || "";
     var before = options.before || "";	
 	var jsonp=options.jsonp || "jsonpcallback";  //jsonp的函数名称
-	var jsonpCallback=options.jsonp||"";
+    var jsonpCallback=options.jsonp||"";
+	var charset=options.charset||"UTF-8";
     var xhr;
 	
 	/**HTML转义
@@ -191,7 +192,10 @@ handpay.ajax.request=function(url,options){
 		var urlPrefix = urlWithParam[0];//the url
 		var arg = urlWithParam[1];//the arguments
 		
-		
+    	if(method == "POST") {//若为post请求提交则修改url值
+            url=urlPrefix;
+        }
+
 		if (username) {
             xhr.open(method, url, async, username, password);
         } else {
@@ -231,7 +235,7 @@ handpay.ajax.request=function(url,options){
 		var script = document.createElement("script");
 			script.async = true;
 			//if ( s.scriptCharset ) {
-				script.charset = "UTF-8";
+				script.charset = charset;
 			//}
 
 				script.src =url;

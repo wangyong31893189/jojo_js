@@ -26,20 +26,9 @@
 	<h1>copyright</h1>
 </footer>
 
-<script src="ajax.js"></script>
-<script>
-	function loadData(){		
-		var cityList=document.getElementById("city_list");
-		cityList.innerHTML="loading...";
-		handpay.ajax.get("city.json",{},function(msg,obj){
-			console.log(msg+"--"+obj);
-			cityList.innerHTML="loading success...";
-		
-		});
-	
-	}
-	
-	(function(){loadData()})();
-</script>
+<script
+    src="../wap/js/source/plugs/sea/sea.js"   
+    data-main="./test.js"
+></script>
 </body>
 </html>

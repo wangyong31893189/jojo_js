@@ -1,11 +1,3 @@
-/*
- * 
- * Copyright 2005-2015 All Rights Reserved 上海瀚银信息技术有限公司.
- * 
- * path: ajax.js
- * author: eric_wang
- * date: 2014/10/22
- */
 
 var handpay=handpay||{"version":"v.1.0.0"};
 
@@ -42,10 +34,10 @@ handpay.ajax = handpay.ajax || {};
  * @returns {XMLHttpRequest} 发送请求的XMLHttpRequest对象
  */   
 handpay.ajax.request=function(url,options){
-	options = options || {};
+    options = options || {};
     var data = options.data || "";
     var async = !(options.async === false);// 是否异步请求。默认为true（异步）
-	var cacheable = !(options.async === false);
+    var cacheable = !(options.async === false);
     var username = options.username || "";
     var password = options.password || "";
     var method = (options.method || "GET").toUpperCase();
@@ -53,15 +45,16 @@ handpay.ajax.request=function(url,options){
     var headers = options.headers || {};
     var success = options.success || "";
     var error = options.error || "";
-    var before = options.before || "";	
-	var jsonp=options.jsonp || "jsonpcallback";  //jsonp的函数名称
-	var jsonpCallback=options.jsonp||"";
+    var before = options.before || "";  
+    var jsonp=options.jsonp || "jsonpcallback";  //jsonp的函数名称
+    var jsonpCallback=options.jsonp||"";
+    var charset=options.charset||"UTF-8";
     var xhr;
-	
-	/**HTML转义
-	 * @param {string} [str]  需要转义的字符串
-	 */
-	function escape(str){
+    
+    /**HTML转义
+     * @param {string} [str]  需要转义的字符串
+     */
+    function escape(str){
       return str
           .replace(/&/g,'&amp;')
           .replace(/</g,'&lt;')
@@ -69,43 +62,43 @@ handpay.ajax.request=function(url,options){
           .replace(/"/g,'&quot;')
           .replace(/'/g,'&#39;');
     }
-	
-	function firedEvent(callback){
-		switch(dataType){
-			case "TEXT":
-			if(callback){
-				callback(escape(xhr.responseText),xhr);
-			}
-			break;			
-			case "JSON":
-			if(callback){
-				callback(parseJson(xhr.responseText),xhr);
-			}
-			break;
-			case "HTML":
-			default:
-			if(callback){
-				callback(xhr.responseText,xhr);
-			}			
-		}
-	}
-	
-	function parseJson(str){
-		if(JSON){
-			return JSON.parse(str);
-		}else{
-			return (new Function("return "+str))();
-		}
-	}
-	
-	//状态报告
-	function reportStatus(){
+    
+    function firedEvent(callback){
+        switch(dataType){
+            case "TEXT":
+            if(callback){
+                callback(escape(xhr.responseText),xhr);
+            }
+            break;          
+            case "JSON":
+            if(callback){
+                callback(parseJson(xhr.responseText),xhr);
+            }
+            break;
+            case "HTML":
+            default:
+            if(callback){
+                callback(xhr.responseText,xhr);
+            }           
+        }
+    }
+    
+    function parseJson(str){
+        if(JSON){
+            return JSON.parse(str);
+        }else{
+            return (new Function("return "+str))();
+        }
+    }
+    
+    //状态报告
+    function reportStatus(){
         if (xhr.readyState == 4) {
-			var stat = xhr.status;
+            var stat = xhr.status;
             if (stat == 200) {
-             	firedEvent(success);
+                firedEvent(success);
             } else {
-             	// http://www.never-online.net/blog/article.asp?id=261
+                // http://www.never-online.net/blog/article.asp?id=261
             // case 12002: // Server timeout      
             // case 12029: // dropped connections
             // case 12030: // dropped connections
@@ -118,11 +111,11 @@ handpay.ajax.request=function(url,options){
             if ((stat >= 200 && stat < 300)
                 || stat == 304
                 || stat == 1223) {                
-				firedEvent(success);
+                firedEvent(success);
             } else {
                 if(error){
-					error.call(this,xhr);
-				}
+                    error.call(this,xhr);
+                }
             }
             
             /*
@@ -153,8 +146,8 @@ handpay.ajax.request=function(url,options){
             }
         }
     }
-	 
-	/**
+     
+    /**
      * 获取XMLHttpRequest对象
      * 
      * @ignore
@@ -176,21 +169,24 @@ handpay.ajax.request=function(url,options){
     }
     
      //execute ajax request
-    function executeXhr(callback) {	
+    function executeXhr(callback) { 
         xhr=getXHR();
         if(cacheable){
-	        try{
-	            req.setRequestHeader("Cache-Control: no-store, no-cache, must-revalidate");
-	            req.setRequestHeader("Connection","close");
-	        } catch(e){}
+            try{
+                req.setRequestHeader("Cache-Control: no-store, no-cache, must-revalidate");
+                req.setRequestHeader("Connection","close");
+            } catch(e){}
         }
          //
-		var urlWithParam = url.split("?");//split the url in two parts
-		var urlPrefix = urlWithParam[0];//the url
-		var arg = urlWithParam[1];//the arguments
-		
-		
-		if (username) {
+        var urlWithParam = url.split("?");//split the url in two parts
+        var urlPrefix = urlWithParam[0];//the url
+        var arg = urlWithParam[1];//the arguments
+        
+        if(method == "POST") {//若为post请求提交则修改url值
+            url=urlPrefix;
+        }
+
+        if (username) {
             xhr.open(method, url, async, username, password);
         } else {
             xhr.open(method, url, async);
@@ -199,133 +195,133 @@ handpay.ajax.request=function(url,options){
         if (async) {
             xhr.onreadystatechange = callback;
         }
-		
-		for (var key in headers) {
+        
+        for (var key in headers) {
             if (headers.hasOwnProperty(key)) {
                 xhr.setRequestHeader(key, headers[key]);
             }
         }
-		
+        
         if(before){
-			before.call(this,xhr);
-		}
-        		
+            before.call(this,xhr);
+        }
+                
         if(method == "POST") {                        
             xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
             xhr.send(arg);
         } else {            
             xhr.send();
         }
-		
+        
         if (!async) {
-			if(callback){
-				callback.call(this);
-			}
-        }		
+            if(callback){
+                callback.call(this);
+            }
+        }       
      }
-	 
-	function loadScript(callback){
-		var head = document.head ||document.getElementsByTagName("head")[0]|| document.documentElement;
-		var script = document.createElement("script");
-			script.async = true;
-			//if ( s.scriptCharset ) {
-				script.charset = "UTF-8";
-			//}
+     
+    function loadScript(callback){
+        var head = document.head ||document.getElementsByTagName("head")[0]|| document.documentElement;
+        var script = document.createElement("script");
+            script.async = true;
+            //if ( s.scriptCharset ) {
+                script.charset = charset;
+            //}
 
-				script.src =url;
+                script.src =url;
 
-				
-				// Attach handlers for all browsers
-				script.onload = script.onreadystatechange = function( _, isAbort) {
+                
+                // Attach handlers for all browsers
+                script.onload = script.onreadystatechange = function( _, isAbort) {
 
-					if ( isAbort || !script.readyState || /loaded|complete/.test( script.readyState ) ) {
+                    if ( isAbort || !script.readyState || /loaded|complete/.test( script.readyState ) ) {
 
-						// Handle memory leak in IE
-						script.onload = script.onreadystatechange = null;
+                        // Handle memory leak in IE
+                        script.onload = script.onreadystatechange = null;
 
-						// Remove the script
-						if ( script.parentNode ) {
-							script.parentNode.removeChild( script );
-						}
+                        // Remove the script
+                        if ( script.parentNode ) {
+                            script.parentNode.removeChild( script );
+                        }
 
-						// Dereference the script
-						script = null;
+                        // Dereference the script
+                        script = null;
 
-						// Callback if not abort
-						if ( !isAbort ) {
-							
-						}else{
-							if(error){
-								error();
-							}
-						}
-					}
-				};
-				
-				if(before){
-					jsonpFired(before);
-				}
-				
-				if(success){
-					jsonpFired(success);
-				}
-				// Circumvent IE6 bugs with base elements (#2709 and #4378) by prepending
-				// Use native DOM manipulation to avoid our domManip AJAX trickery
-				head.insertBefore( script, head.firstChild );
-			//}
-	}
-	
-	//jsonp 数据获取
-	function jsonpFired(callback){
-		//console.log(" window."+jsonpCallback+"=function(data){data=(new Function('return data'))();callback(data)}");
-		var fired=new Function("callbackfunction","parseJsonFun"," window."+jsonpCallback+"=function(data){data=parseJsonFun(data);callbackfunction(data);}");
-		fired(callback,parseJson);	
-	}
-	 
-	
-	(function(){
-		var callback = reportStatus;//default alert
-		if(data||dataType==="JSONP"){
-			if(url.indexOf("?")==-1){
-				 url=url+"?";
-			}else{
-				 url+="&";
-			}
-			if(dataType==="JSONP"){
-				if(!jsonpCallback){// jsonpCallback 参数为空或者没传的时候 重新生成函数名称
-					jsonpCallback="handpayAjax"+(new Date().getTime());
-				}				
-				url+=jsonp+"="+jsonpCallback+"&";				
-			}
-			if(data){
-				try{
-					if(typeof(data)==="object"){ //如果data参数是json对象 就转为参数的链式结构						
-						for(var i in data){
-							if(data.hasOwnProperty(i)){
-								url+=i+"="+data[i]+"&";
-							}
-						}
-						if(!cacheable){
-							url+="t"+(new Date().getTime())+"=v1&";
-						}
-						url=url.substring(0,url.length-1);
-					}
-					
-				}catch(e){
-					return null;
-				}
-			}			
-		}
+                        // Callback if not abort
+                        if ( !isAbort ) {
+                            
+                        }else{
+                            if(error){
+                                error();
+                            }
+                        }
+                    }
+                };
+                
+                if(before){
+                    jsonpFired(before);
+                }
+                
+                if(success){
+                    jsonpFired(success);
+                }
+                // Circumvent IE6 bugs with base elements (#2709 and #4378) by prepending
+                // Use native DOM manipulation to avoid our domManip AJAX trickery
+                head.insertBefore( script, head.firstChild );
+            //}
+    }
+    
+    //jsonp 数据获取
+    function jsonpFired(callback){
+        //console.log(" window."+jsonpCallback+"=function(data){data=(new Function('return data'))();callback(data)}");
+        var fired=new Function("callbackfunction","parseJsonFun"," window."+jsonpCallback+"=function(data){data=parseJsonFun(data);callbackfunction(data);}");
+        fired(callback,parseJson);  
+    }
+     
+    
+    (function(){
+        var callback = reportStatus;//default alert
+        if(data||dataType==="JSONP"){
+            if(url.indexOf("?")==-1){
+                 url=url+"?";
+            }else{
+                 url+="&";
+            }
+            if(dataType==="JSONP"){
+                if(!jsonpCallback){// jsonpCallback 参数为空或者没传的时候 重新生成函数名称
+                    jsonpCallback="handpayAjax"+(new Date().getTime());
+                }               
+                url+=jsonp+"="+jsonpCallback+"&";               
+            }
+            if(data){
+                try{
+                    if(typeof(data)==="object"){ //如果data参数是json对象 就转为参数的链式结构                       
+                        for(var i in data){
+                            if(data.hasOwnProperty(i)){
+                                url+=i+"="+data[i]+"&";
+                            }
+                        }
+                        if(!cacheable){
+                            url+="t"+(new Date().getTime())+"=v1&";
+                        }
+                        url=url.substring(0,url.length-1);
+                    }
+                    
+                }catch(e){
+                    return null;
+                }
+            }           
+        }
          /*encode URL with Chinese*/
         url = encodeURI(url);
         //alert(url);
         //execute the remote method
-		if(dataType==="JSONP"){
-			loadScript(callback);
-		}else{
-			executeXhr(callback);
-		}
-	})();
+        if(dataType==="JSONP"){
+            loadScript(callback);
+        }else{
+            executeXhr(callback);
+        }
+    })();
 };
 
 
@@ -343,10 +339,10 @@ handpay.ajax.request=function(url,options){
  * @returns {XMLHttpRequest}    发送请求的XMLHttpRequest对象
  */
 handpay.ajax.post = function (url, data, success) {
-	var options={};
-	options.method="POST";
-	options.data=data;
-	options.success=success;
+    var options={};
+    options.method="POST";
+    options.data=data;
+    options.success=success;
     return handpay.ajax.request(
         url, options
     );
@@ -368,10 +364,10 @@ handpay.ajax.post = function (url, data, success) {
  * @returns {XMLHttpRequest}    发送请求的XMLHttpRequest对象
  */
 handpay.ajax.get = function (url,data,success) {
-	var options={};
-	options.method="GET";
-	options.data=data;
-	options.success=success;
+    var options={};
+    options.method="GET";
+    options.data=data;
+    options.success=success;
     return handpay.ajax.request(url,options);
 };
 
